@@ -3,12 +3,14 @@ import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { Application, Color, View } from "@nativescript/core";
 import { NoticiasServices } from "../donain/noticias.service";
+import { Toasty } from 'nativescript-toasty';
+import * as Toast from 'nativescript-toast';
 //import * as app from "tns-core-modules/Application" ;
 
 @Component({
     selector: "Search",
     moduleId: module.id,
-    templateUrl: "./search.component.html",
+    templateUrl: "./search.component.html"//,
     //providers:[NoticiasServices]
 })
 export class SearchComponent implements OnInit {
@@ -18,10 +20,10 @@ export class SearchComponent implements OnInit {
     onPull(e) {
         console.log(e);
         const pullRefresh = e.object;
-        setTimeout(() => {
+      /*  setTimeout(() => {
             this.resultados.push("xxxxxxx");
             pullRefresh.refreshing = false;
-        }, 2000);
+        }, 2000);*/
     }
 
     constructor(private noticias:NoticiasServices) {
@@ -35,9 +37,9 @@ export class SearchComponent implements OnInit {
        // console.log([1,2,3]);
        // console.dir([4,5,6]);
         // Init your component properties here.
-        this.noticias.agregar("Hola 01");
+      /*   this.noticias.agregar("Hola 01");
         this.noticias.agregar("Hola 02");
-        this.noticias.agregar("Hola 03");
+        this.noticias.agregar("Hola 03");*/
     }
 
     onDrawerButtonTap(): void {
@@ -50,7 +52,7 @@ export class SearchComponent implements OnInit {
     }
 
     buscarAhora(s: string) {
-        this.resultados = this.noticias.buscar().filter((x) => x.indexOf(s) >= 0);
+       /* this.resultados = this.noticias.buscar().filter((x) => x.indexOf(s) >= 0);
 
         const layout = <View>this.layout.nativeElement;
         layout.animate({
@@ -61,7 +63,20 @@ export class SearchComponent implements OnInit {
             backgroundColor: new Color("white"),
             duration: 300,
             delay: 150
-        }));
+        }));*/
+
+       
+       // const Toast = new Toasty({ text: "Error en la búsqueda" });
+        console.dir("buscarAhora" + s);
+        this.noticias.buscar(s).then((r: any) => { 
+            console.log("resultados buscarAhora: " + JSON.stringify(r));
+            this.resultados = r;
+        }, (e) => {
+            console.log("error buscarAhora" + e);
+            //Toast.show();
+            //Toast.show({text:"Error en la busqueda", duration: Toast.DURATION.SHORT});
+        });
+
     }
      
 }

@@ -47,7 +47,7 @@ export class SettingsComponent implements OnInit {
                 )
 
         );*/
-        const toastOptions: Toast.ToastOptions = {
+        const toastOptions: Toast.ToastOpions = {
             text: "Hola Toast", duration: Toast.duration.lshort
         };
         this.doLater(() => Toast.show(toastOptions));
